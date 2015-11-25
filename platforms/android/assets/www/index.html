@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Device Ready Example</title>
+	<link rel="stylesheet" href="css/telcel.css">	
+	<script type="text/javascript" charset="utf-8">
+		function signUser(){
+			//navigator.notification.alert("Session: ", alertDismissed, "Warning",'Close');
+			var userName = document.getElementById("userName").value;
+			var userPassword = document.getElementById("userPassword").value;
+			var JSESSIONID = localStorage.getItem("JSESSIONID");
+			var newObjAjaxRequest = new Ajax();				
+			newObjAjaxRequest.sendXMLHttpGetReq("http://172.20.10.5:8080/ServerPush/authenticationServlet?userName="+userName+"&userPassword="+userPassword+"&JSESSIONID="+JSESSIONID, signUserReady);
+		}
+		
+		var signUserReady = function(response) {
+			document.getElementById("JSESSIONID").value=response;
+			if(response != ""){
+				if(typeof(Storage) !== "undefined") {
+					localStorage.setItem("userName", document.getElementById("userName").value);
+					localStorage.setItem("userPassword", document.getElementById("userPassword").value);
+					localStorage.setItem("JSESSIONID", response);
+					document.getElementById("JSESSIONID").value = localStorage.getItem("JSESSIONID");
+					window.location.href="second.html";
+				} else {
+					// Sorry! No Web Storage support..
+				}
+			} else {
+				navigator.vibrate(1000,1000,3000,1000,5000);
+			}
+		};
+				
+		function alertDismissed(){
+		
+		}
+		
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+
+		function onDeviceReady() {
+		}
+		
+		function toggle_visibility(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == 'block')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = 'block';
+		}	
+
+		function delay(ms) {
+			var cur_d = new Date();
+			var cur_ticks = cur_d.getTime();
+			var ms_passed = 0;
+			while(ms_passed < ms) {
+				var d = new Date();
+				var ticks = d.getTime();
+				ms_passed = ticks - cur_ticks;
+			}
+		}
+    </script>
+  </head>
+  <body onload="onLoad()">
+  <br/>
+  <br/>
+  <br/>
+  <br/>  
+  			
+  <div id="preloader" style="display:none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('img/loading.gif') 
+                50% 50% 
+                no-repeat;">
+  </div>
+		
+  
+  
+  
+        <div class="module-head"></div>
+		<div class="module form-module">				  
+		  <div class="toggle">
+			<i class="fa fa-times fa-pencil"></i>
+			<div class="tooltip">Click Me</div>
+		  </div>
+		  <div class="form">
+			<h2>Ingresa en tu cuenta</h2>
+			<form id="myForm" onsubmit="return false;">
+			<input placeholder="Usuario" type="text" name="userName" id="userName" />
+			<input placeholder="Contrase&ntilde;a" type="password" name="userPassword" id="userPassword" />
+			<input placeholder="JSESSIONID" type="text" name="JSESSIONID" id="JSESSIONID" />		  
+			<button onclick="signUser()" onsubmit="return false;">Ingresar</button>	  
+			</form>
+		  </div>
+		  <div class="cta">
+			<a href="http://www.telcel.com">&iquest;Olvidaste tu contrase&ntilde;a?</a>
+		  </div>
+		</div>		
+		
+		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<script type="text/javascript">
+            app.initialize();
+        </script>		
+		</body>
+</html>

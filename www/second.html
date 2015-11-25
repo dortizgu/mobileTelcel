@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Device Ready Example</title>
+	
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		function onLoad() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+
+		function onDeviceReady() {
+			//navigator.notification.alert(localStorage.getItem("userName"), alertDismissedAjax, "userName",'Close');
+			//navigator.notification.alert(localStorage.getItem("userPassword"), alertDismissedAjax, "userPassword",'Close');
+			//navigator.notification.alert(localStorage.getItem("JSESSIONID"), alertDismissedAjax, "JSESSIONID",'Close');		
+		}
+	</script>
+  </head>
+  <body onload="onLoad()" style="font-style: italic;font-size:20px;font-family:Verdana;">
+
+<img src="img/lock-open-blue.png" width="50%" height="50%" />
+		
+		<script type="text/javascript" src="js/ajax.js"></script>	
+		<script type="text/javascript">
+            app.initialize();
+        </script>
+		
+		<a href="index.html">Salir</a>
+		</body>
+</html>
